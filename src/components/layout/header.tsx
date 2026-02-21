@@ -295,31 +295,39 @@ function DesktopDropdown({
                                     ))}
                                 </ul>
 
-                                {/* Right column — "View all" card with image */}
-                                {hasViewAll && (
-                                    <div className="flex w-[240px] flex-col p-5">
-                                        <Link
-                                            href={(link.viewAll as { href: string }).href}
-                                            className="group/va block"
-                                        >
-                                            <p className="text-[16px] font-bold text-foreground">
-                                                {(link.viewAll as { label: string }).label}
-                                            </p>
-                                            <p className="mt-1.5 text-[13px] leading-relaxed text-muted-foreground">
-                                                We don&apos;t stop there, check out all the services we offer here at RapSora
-                                            </p>
-                                        </Link>
+                                {/* Right column — card with image */}
+                                {hasViewAll && (() => {
+                                    const va = link.viewAll as { label: string; href: string; description?: string; image?: string };
+                                    return (
+                                        <div className="flex w-[260px] flex-col p-5">
+                                            <Link href={va.href} className="group/va block">
+                                                <p className="text-[16px] font-bold text-foreground">
+                                                    {va.label}
+                                                </p>
+                                                <p className="mt-1.5 text-[13px] leading-relaxed text-muted-foreground">
+                                                    {va.description || `Check out everything we offer here at RapSora`}
+                                                </p>
+                                            </Link>
 
-                                        {/* Decorative image */}
-                                        <div className="mt-4 overflow-hidden rounded-xl">
-                                            <img
-                                                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop"
-                                                alt="Team working together"
-                                                className="h-[140px] w-full object-cover transition-transform duration-300 group-hover/va:scale-105"
-                                            />
+                                            {/* Image with optional play button overlay */}
+                                            <div className="group/img relative mt-4 overflow-hidden rounded-xl">
+                                                <img
+                                                    src={va.image || 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop'}
+                                                    alt={va.label}
+                                                    className="h-[160px] w-full object-cover transition-transform duration-300 hover:scale-105"
+                                                />
+                                                {/* Play button — only for showreel-type cards */}
+                                                {va.label.toLowerCase().includes('showreel') && (
+                                                    <div className="absolute bottom-3 left-3 flex h-10 w-10 items-center justify-center rounded-full bg-[#c8f547] shadow-lg">
+                                                        <svg className="ml-0.5 h-4 w-4 text-[#111]" viewBox="0 0 24 24" fill="currentColor">
+                                                            <path d="M8 5v14l11-7z" />
+                                                        </svg>
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
-                                )}
+                                    );
+                                })()}
                             </div>
                         </div>
                     </motion.div>
@@ -459,7 +467,8 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                                                 className="overflow-hidden"
                                                             >
                                                                 {(link as typeof navLinks[0]).children!.map((child) => {
-                                                                    const Icon = child.icon ? iconMap[child.icon] : null;
+                                                                    const iconKey = 'icon' in child ? (child as { icon?: string }).icon : undefined;
+                                                                    const Icon = iconKey ? iconMap[iconKey] : null;
                                                                     return (
                                                                         <li key={child.href}>
                                                                             <Link

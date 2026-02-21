@@ -1,26 +1,264 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
+
+/* ========================================
+   RAPSORA DESIGN SYSTEM
+   Brand: #9061F9 (vivid violet) on #000000 (pure black)
+   Extracted directly from the RapSora logo
+   ======================================== */
 
 @theme inline {
+  /* --- Core tokens --- */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* --- Brand palette (direct Tailwind access) ---
+     Use: text-brand, bg-brand-light, bg-brand-muted, etc.
+  */
+  --color-brand: var(--brand);
+  --color-brand-light: var(--brand-light);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-muted: var(--brand-muted);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+
+  /* --- Typography --- */
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-satoshi);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+
+  /* --- Radius scale --- */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 20px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ========================================
+   LIGHT MODE
+   Background: Warm near-white
+   Foreground: Near-black
+   Primary: Logo violet #9061F9
+   ======================================== */
+:root {
+  --radius: 0.625rem;
+
+  /* Core palette */
+  --background: oklch(1 0 0);
+  /* #FFFFFF — pure white */
+  --foreground: oklch(0.12 0.010 280);
+  /* #111116 — near black, slight cool */
+  --card: oklch(1 0 0);
+  /* pure white */
+  --card-foreground: oklch(0.12 0.010 280);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.12 0.010 280);
+
+  /* Primary — exact logo violet */
+  --primary: oklch(0.60 0.24 300);
+  /* #9061F9 — logo purple */
+  --primary-foreground: oklch(1 0 0);
+  /* white */
+
+  /* Secondary — very light violet wash */
+  --secondary: oklch(0.96 0.025 300);
+  /* #EEE8FF */
+  --secondary-foreground: oklch(0.42 0.18 300);
+  /* deep violet */
+
+  /* Muted — cool neutral */
+  --muted: oklch(0.96 0.003 280);
+  /* #F4F4F6 */
+  --muted-foreground: oklch(0.52 0.012 280);
+  /* #6B6B76 */
+
+  /* Accent — light violet tint */
+  --accent: oklch(0.94 0.04 300);
+  /* #E9E0FF */
+  --accent-foreground: oklch(0.42 0.18 300);
+
+  --destructive: oklch(0.577 0.245 27);
+  --border: oklch(0.90 0.004 280);
+  /* #E2E2E7 */
+  --input: oklch(0.90 0.004 280);
+  --ring: oklch(0.60 0.24 300);
+  /* matches primary */
+
+  /* Charts — violet-forward */
+  --chart-1: oklch(0.60 0.24 300);
+  --chart-2: oklch(0.70 0.18 300);
+  --chart-3: oklch(0.55 0.20 330);
+  --chart-4: oklch(0.68 0.14 270);
+  --chart-5: oklch(0.60 0.12 250);
+
+  /* Sidebar */
+  --sidebar: oklch(0.97 0.005 300);
+  --sidebar-foreground: oklch(0.12 0.010 280);
+  --sidebar-primary: oklch(0.60 0.24 300);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.94 0.04 300);
+  --sidebar-accent-foreground: oklch(0.42 0.18 300);
+  --sidebar-border: oklch(0.90 0.004 280);
+  --sidebar-ring: oklch(0.60 0.24 300);
+
+  /* Brand tokens */
+  --brand: oklch(0.60 0.24 300);
+  /* #9061F9 — exact logo */
+  --brand-light: oklch(0.72 0.18 300);
+  /* #B08CF6 — lighter tint */
+  --brand-dark: oklch(0.45 0.24 300);
+  /* #6832D6 — deeper */
+  --brand-muted: oklch(0.94 0.04 300);
+  /* #E9E0FF — subtle wash */
+  --surface: oklch(1 0 0);
+  --surface-elevated: oklch(0.985 0.002 75);
+}
+
+/* ========================================
+   DARK MODE
+   Bg: Pure black (logo black #000000)
+   Primary: Slightly brighter violet for contrast
+   ======================================== */
+.dark {
+  --background: oklch(0.08 0.006 280);
+  /* #050508 — near-pure black */
+  --foreground: oklch(0.96 0.003 75);
+  /* #F5F5F0 — warm white */
+  --card: oklch(0.12 0.008 280);
+  /* #0D0D14 — elevated dark */
+  --card-foreground: oklch(0.96 0.003 75);
+  --popover: oklch(0.13 0.010 280);
+  --popover-foreground: oklch(0.96 0.003 75);
+
+  /* Primary — slightly lighter for visibility on black */
+  --primary: oklch(0.68 0.22 300);
+  /* #A87EF9 — bright on black */
+  --primary-foreground: oklch(0.10 0.010 280);
+  /* very dark, near black */
+
+  /* Secondary */
+  --secondary: oklch(0.18 0.015 280);
+  /* #141420 */
+  --secondary-foreground: oklch(0.88 0.012 300);
+
+  /* Muted */
+  --muted: oklch(0.18 0.012 280);
+  /* #141420 */
+  --muted-foreground: oklch(0.62 0.010 280);
+  /* #909099 */
+
+  /* Accent — subtle deep violet glow */
+  --accent: oklch(0.25 0.07 300);
+  /* #1E0F40 */
+  --accent-foreground: oklch(0.80 0.14 300);
+
+  --destructive: oklch(0.704 0.191 22);
+  --border: oklch(1 0 0 / 9%);
+  /* white@ 9% */
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.68 0.22 300);
+
+  /* Charts */
+  --chart-1: oklch(0.68 0.22 300);
+  --chart-2: oklch(0.58 0.22 330);
+  --chart-3: oklch(0.62 0.20 270);
+  --chart-4: oklch(0.72 0.18 310);
+  --chart-5: oklch(0.55 0.16 250);
+
+  /* Sidebar */
+  --sidebar: oklch(0.11 0.008 280);
+  --sidebar-foreground: oklch(0.96 0.003 75);
+  --sidebar-primary: oklch(0.68 0.22 300);
+  --sidebar-primary-foreground: oklch(0.10 0.010 280);
+  --sidebar-accent: oklch(0.25 0.07 300);
+  --sidebar-accent-foreground: oklch(0.80 0.14 300);
+  --sidebar-border: oklch(1 0 0 / 9%);
+  --sidebar-ring: oklch(0.68 0.22 300);
+
+  /* Brand tokens */
+  --brand: oklch(0.68 0.22 300);
+  /* slightly brighter on black */
+  --brand-light: oklch(0.78 0.16 300);
+  --brand-dark: oklch(0.55 0.24 300);
+  --brand-muted: oklch(0.22 0.08 300);
+  /* deep violet glow */
+  --surface: oklch(0.12 0.008 280);
+  --surface-elevated: oklch(0.16 0.010 280);
+}
+
+/* ========================================
+   BASE STYLES
+   ======================================== */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Headings use Satoshi (brand typeface) */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-satoshi);
+    @apply tracking-tight;
+  }
+
+  /* Logo-violet tinted text selection */
+  ::selection {
+    background-color: oklch(0.60 0.24 300 / 22%);
+    color: inherit;
+  }
+
+  .dark ::selection {
+    background-color: oklch(0.68 0.22 300 / 28%);
+  }
 }
